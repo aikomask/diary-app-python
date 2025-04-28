@@ -1,5 +1,7 @@
+from django.db.models import Q
+import datetime
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import DiaryEntry
+from .models import DiaryEntry, Category
 from .forms import DiaryEntryForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -20,15 +22,37 @@ def register(request):
 @login_required
 def home(request):
     query = request.GET.get('q')
+    category_id = request.GET.get('category')
+    date_filter = request.GET.get('date')
+
     entries = DiaryEntry.objects.filter(user=request.user)
 
+    if category_id:
+        entries = entries.filter(categories__id=category_id)
+
+    if date_filter:
+        try:
+            target_date = datetime.datetime.strptime(date_filter, "%Y-%m-%d").date()
+            entries = entries.filter(created_at__date=target_date)
+        except ValueError:
+            pass
+
     if query:
-        entries = entries.filter(title__icontains=query)
+        entries = entries.filter(Q(title__icontains=query))
 
     entries = entries.order_by('-created_at')
-    count = entries.count() 
+    count = entries.count()
 
-    return render(request, 'diary/home.html', {'entries': entries, 'query': query, 'count': count})
+    categories = Category.objects.all()
+
+    return render(request, 'diary/home.html', {
+        'entries': entries,
+        'query': query,
+        'count': count,
+        'categories': categories,
+        'active_category': int(category_id) if category_id else None,
+        'active_date': date_filter,
+    })
 
 @login_required
 def create_entry(request):

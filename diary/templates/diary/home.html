@@ -24,19 +24,30 @@
     	</div>
      </form>
 
+{% if entries %}
+    <ul class="list-group">
+    {% for entry in entries %}
+        <li class="list-group-item">
+            <a href="{% url 'view_entry' entry.id %}">
+                <strong>{{ entry.title }}</strong>
+            </a>
 
-    {% if entries %}
-        <ul class="list-group">
-        {% for entry in entries %}
-            <li class="list-group-item">
-		<a href="{% url 'view_entry' entry.id %}"><strong>{{ entry.title }}</strong></a><br>
-    		<small class="text-muted">{{ entry.created_at|date:"j E Y, H:i" }}</small>
-            </li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <div class="alert alert-info">Записей пока нет.</div>
-    {% endif %}
+            <!-- Категории для записи -->
+            {% if entry.categories.all %}
+                <div class="mt-1">
+                    {% for cat in entry.categories.all %}
+                        <span class="badge bg-info text-dark">{{ cat.name }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <small class="text-muted d-block">{{ entry.created_at|date:"j E Y, H:i" }}</small>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert alert-info">Записей пока нет.</div>
+{% endif %}
 </div>
 
 </body>

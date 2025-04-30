@@ -2,7 +2,13 @@ from django import forms
 from .models import DiaryEntry
 
 class DiaryEntryForm(forms.ModelForm):
-    class Meta:
-        model = DiaryEntry
-        fields = ['title', 'content', 'categories']
+    categories = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    class DiaryEntryForm(forms.ModelForm):
+        class Meta:
+            model = DiaryEntry
+            fields = ['title', 'content', 'categories']
 

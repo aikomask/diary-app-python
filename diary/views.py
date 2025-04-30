@@ -7,6 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
 
 def register(request):
     if request.method == 'POST':
@@ -92,4 +96,17 @@ def delete_entry(request, entry_id):
         return redirect('home')
     return render(request, 'diary/delete_entry.html', {'entry': entry})
 
+@login_required
+def export_entry_pdf(request, entry_id):
+    entry = get_object_or_404(DiaryEntry, id=entry_id, user=request.user)
+    html_string = render_to_string('diary/entry_pdf.html', {'entry': entry})
 
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="{entry.title}.pdf"'
+
+    with tempfile.NamedTemporaryFile(delete=True) as tmp:
+        HTML(string=html_string).write_pdf(tmp.name)
+        tmp.seek(0)
+        response.write(tmp.read())
+
+    return response

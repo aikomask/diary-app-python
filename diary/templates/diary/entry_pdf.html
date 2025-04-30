@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ entry.title }}</title>
+    <style>
+        body { font-family: sans-serif; margin: 30px; }
+        h1 { color: #333; }
+        .meta { color: #777; font-size: 0.9em; margin-bottom: 20px; }
+        .category { display: inline-block; padding: 3px 7px; margin: 3px; background: #e0f0ff; border-radius: 5px; font-size: 0.85em; }
+    </style>
+</head>
+<body>
+    <h1>{{ entry.title }}</h1>
+    <p class="meta">Создано: {{ entry.created_at|date:"d E Y, H:i" }}</p>
+    
+    {% if entry.categories.all %}
+        <p>
+        {% for cat in entry.categories.all %}
+            <span class="category">{{ cat.name }}</span>
+        {% endfor %}
+        </p>
+    {% endif %}
+
+    <p>{{ entry.content|linebreaksbr }}</p>
+</body>
+</html>

@@ -14,6 +14,7 @@
     </div>
     <a href="{% url 'edit_entry' entry.id %}" class="btn btn-warning">Редактировать</a>
     <a href="{% url 'delete_entry' entry.id %}" class="btn btn-danger ms-2">Удалить</a>
+    <a href="{% url 'export_entry_pdf' entry.id %}" class="btn btn-outline-dark ms-2">📄 Экспорт в PDF</a>
     <a href="{% url 'home' %}" class="btn btn-secondary ms-2">Назад</a>
 </div>
 </body>

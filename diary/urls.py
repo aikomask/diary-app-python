@@ -9,6 +9,7 @@ urlpatterns = [
     path('entry/<int:entry_id>/edit/', views.edit_entry, name='edit_entry'),
     path('entry/<int:entry_id>/delete/', views.delete_entry, name='delete_entry'),
     path('register/', register, name='register'),
+    path('entry/<int:entry_id>/export/', views.export_entry_pdf, name='export_entry_pdf'),
 ]
 
 

@@ -7,8 +7,7 @@ class DiaryEntryForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
-    class DiaryEntryForm(forms.ModelForm):
-        class Meta:
-            model = DiaryEntry
-            fields = ['title', 'content', 'categories']
 
+    class Meta:
+        model = DiaryEntry
+        fields = ['title', 'content', 'categories']

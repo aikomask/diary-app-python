@@ -1,5 +1,5 @@
 from django import forms
-from .models import DiaryEntry
+from .models import DiaryEntry, Category
 
 class DiaryEntryForm(forms.ModelForm):
     categories = forms.ModelMultipleChoiceField(

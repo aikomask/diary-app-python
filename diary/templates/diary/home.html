@@ -17,39 +17,57 @@
     <p class="text-muted">Записей: {{ count }}</p>
     <a class="btn btn-primary mb-4" href="{% url 'create_entry' %}">Создать новую запись</a>
 
-    <form method="get" class="mb-3">
-    	<div class="input-group">
-        	<input type="text" name="q" value="{{ query|default:'' }}" class="form-control" placeholder="Поиск по заголовку...">
-        	<button class="btn btn-outline-primary" type="submit">🔍</button>
-    	</div>
-     </form>
+    <!-- 🔎 Форма фильтрации -->
+    <form method="get" class="row g-3 mb-4 align-items-end">
+        <div class="col-md-4">
+            <input type="text" name="q" value="{{ query|default:'' }}" class="form-control" placeholder="🔍 Поиск по заголовку">
+        </div>
 
-{% if entries %}
-    <ul class="list-group">
-    {% for entry in entries %}
-        <li class="list-group-item">
-            <a href="{% url 'view_entry' entry.id %}">
-                <strong>{{ entry.title }}</strong>
-            </a>
+        <div class="col-md-3">
+            <select name="category" class="form-select">
+                <option value="">Все категории</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if cat.id == active_category %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-            <!-- Категории для записи -->
-            {% if entry.categories.all %}
-                <div class="mt-1">
-                    {% for cat in entry.categories.all %}
-                        <span class="badge bg-info text-dark">{{ cat.name }}</span>
-                    {% endfor %}
-                </div>
-            {% endif %}
+        <div class="col-md-3">
+            <input type="date" name="date" value="{{ active_date|default:'' }}" class="form-control">
+        </div>
 
-            <small class="text-muted d-block">{{ entry.created_at|date:"j E Y, H:i" }}</small>
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <div class="alert alert-info">Записей пока нет.</div>
-{% endif %}
+        <div class="col-md-2 d-flex gap-2">
+            <button type="submit" class="btn btn-outline-primary w-100">Применить</button>
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">✖️</a>
+        </div>
+    </form>
+
+    {% if entries %}
+        <ul class="list-group">
+        {% for entry in entries %}
+            <li class="list-group-item">
+                <a href="{% url 'view_entry' entry.id %}">
+                    <strong>{{ entry.title }}</strong>
+                </a>
+
+                {% if entry.categories.all %}
+                    <div class="mt-1">
+                        {% for cat in entry.categories.all %}
+                            <span class="badge bg-info text-dark">{{ cat.name }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <small class="text-muted d-block">{{ entry.created_at|date:"j E Y, H:i" }}</small>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-info">Записей пока нет.</div>
+    {% endif %}
 </div>
 
 </body>
 </html>
-

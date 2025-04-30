@@ -1,5 +1,5 @@
 from django.db.models import Q
-import datetime
+from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import DiaryEntry, Category
 from .forms import DiaryEntryForm
@@ -32,7 +32,7 @@ def home(request):
 
     if date_filter:
         try:
-            target_date = datetime.datetime.strptime(date_filter, "%Y-%m-%d").date()
+            target_date = datetime.strptime(date_filter, "%Y-%m-%d").date()
             entries = entries.filter(created_at__date=target_date)
         except ValueError:
             pass

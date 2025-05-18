@@ -1,0 +1,36 @@
+{% extends "diary/base.html" %}
+{% block content %}
+<h2>📈 Активность по дням</h2>
+<canvas id="activityChart" width="600" height="300"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = {{ labels|safe }};
+    const counts = {{ counts|safe }};
+
+    const ctx = document.getElementById("activityChart").getContext("2d");
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Количество записей",
+                data: counts,
+                backgroundColor: "rgba(75, 192, 192, 0.6)"
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+</script>
+<a href="{% url 'home' %}" class="btn btn-primary mb-3">← Назад на главную</a>
+{% endblock %}

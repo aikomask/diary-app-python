@@ -1,0 +1,14 @@
+{% extends "diary/base.html" %}
+
+{% block content %}
+  <h2>📊 Статистика дневника</h2>
+  <ul>
+    <li><strong>Всего записей:</strong> {{ stats.total_entries }}</li>
+    <li><strong>Средняя длина записи:</strong> {{ stats.avg_length|default:"0" }}</li>
+    <li><strong>Записей сегодня:</strong> {{ stats.today_entries }}</li>
+    <li><strong>Записей за неделю:</strong> {{ stats.recent_entries }}</li>
+    <li><strong>Прикреплённых записей:</strong> {{ stats.pinned_entries }}</li>
+  </ul>
+  <a href="{% url 'home' %}" style="display:inline-block; margin-top:20px; background:#337ab7; color:white; padding:10px 15px; border-radius:5px;">⬅ Назад на главную</a>
+{% endblock %}
+

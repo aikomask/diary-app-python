@@ -4,22 +4,52 @@
     <meta charset="UTF-8">
     <title>{{ entry.title }}</title>
     <style>
-        body { font-family: sans-serif; margin: 30px; }
-        h1 { color: #333; }
-        .meta { color: #777; font-size: 0.9em; margin-bottom: 20px; }
-        .category { display: inline-block; padding: 3px 7px; margin: 3px; background: #e0f0ff; border-radius: 5px; font-size: 0.85em; }
+        body {
+            font-family: sans-serif;
+            margin: 30px;
+            background-color: #ffd1dc;
+            color: #333;
+        }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        .meta {
+            color: #555;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        .category {
+            display: inline-block;
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            margin-right: 5px;
+        }
+        img {
+            max-width: 100%;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
     <h1>{{ entry.title }}</h1>
     <p class="meta">Создано: {{ entry.created_at|date:"d E Y, H:i" }}</p>
-    
+
     {% if entry.categories.all %}
         <p>
-        {% for cat in entry.categories.all %}
-            <span class="category">{{ cat.name }}</span>
-        {% endfor %}
+            {% for cat in entry.categories.all %}
+                <span class="category">{{ cat.name }}</span>
+            {% endfor %}
         </p>
+    {% endif %}
+
+    {% if entry.image %}
+        <p><img src="{{ entry.image.url }}" alt="Image"></p>
     {% endif %}
 
     <p>{{ entry.content|linebreaksbr }}</p>

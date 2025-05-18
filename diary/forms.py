@@ -10,4 +10,4 @@ class DiaryEntryForm(forms.ModelForm):
 
     class Meta:
         model = DiaryEntry
-        fields = ['title', 'content', 'categories']
+        fields = ['title', 'content', 'categories','is_pinned', 'image'] 

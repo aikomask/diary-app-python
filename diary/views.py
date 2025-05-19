@@ -15,12 +15,17 @@ from django.utils.dateformat import format
 from .models import DiaryEntry, Category
 from .forms import DiaryEntryForm
 
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 def toggle_theme(request):
     current = request.session.get('theme', 'light')
     request.session['theme'] = 'pink' if current == 'light' else 'light'
     return redirect(request.META.get('HTTP_REFERER', 'home'))
 
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def register(request):
     if request.method == 'POST':
@@ -33,7 +38,6 @@ def register(request):
         form = UserCreationForm()
     theme = request.session.get('theme', 'light')
     return render(request, 'diary/register.html', {'form': form, 'theme': theme})
-
 
 @login_required
 def home(request):

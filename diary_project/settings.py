@@ -107,3 +107,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Auth
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
+
+if os.environ.get("RENDER"):
+    try:
+        from diary.create_superuser import create_super
+        create_super()
+    except Exception as e:
+        print(f"Superuser creation error: {e}")

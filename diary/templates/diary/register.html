@@ -1,14 +1,47 @@
 {% extends 'diary/base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">📝 Регистрация нового пользователя</h2>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">Регистрация нового пользователя</h2>
+  </div>
 
-<form method="post" class="card p-4 shadow-sm">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-    <a href="{% url 'login' %}" class="btn btn-link">Уже есть аккаунт? Войти</a>
-</form>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form method="post" class="space-y-6" action="{% url 'register' %}">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div>
+        <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-900">Имя пользователя</label>
+        {{ form.username.errors }}
+        {{ form.username|add_class:"mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm" }}
+      </div>
+
+      <div>
+        <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-900">Пароль</label>
+        {{ form.password1.errors }}
+        {{ form.password1|add_class:"mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm" }}
+      </div>
+
+      <div>
+        <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-900">Подтверждение пароля</label>
+        {{ form.password2.errors }}
+        {{ form.password2|add_class:"mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm" }}
+      </div>
+
+      <div>
+        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          Зарегистрироваться
+        </button>
+      </div>
+    </form>
+
+    <p class="mt-10 text-center text-sm text-gray-500">
+      Уже есть аккаунт?
+      <a href="{% url 'login' %}" class="font-semibold text-indigo-600 hover:text-indigo-500">Войти</a>
+    </p>
+  </div>
+</div>
 {% endblock %}

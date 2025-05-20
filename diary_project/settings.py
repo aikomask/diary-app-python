@@ -108,6 +108,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
 
+INSTALLED_APPS += ['theme', 'tailwind', 'theme', 'django_browser_reload',]
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 if os.environ.get("RENDER"):
     try:
         from diary.create_superuser import create_super

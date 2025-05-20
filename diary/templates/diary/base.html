@@ -1,7 +1,20 @@
 <!-- templates/diary/base.html -->
 <!DOCTYPE html>
 <html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Дневник{% endblock %}</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind (CDN) — для адаптивных классов -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
+        body.pink-theme {
+            background-color: #ffd1dc;
+        }
         .btn {
             padding: 10px 20px;
             border: none;
@@ -20,25 +33,58 @@
         .btn-secondary:hover {
             background-color: #5a6268;
         }
-        </style>        
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Дневник{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body.pink-theme {
-            background-color: #ffd1dc;
-        }
     </style>
 </head>
+
 <body class="{% if request.session.theme == 'pink' %}pink-theme{% else %}bg-light{% endif %}">
+
+<!-- Навбар -->
+<nav class="bg-white shadow-sm border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <a href="/" class="text-xl font-bold text-blue-600">📘 Дневник</a>
+
+            <!-- Desktop -->
+            <div class="hidden md:flex space-x-4 items-center">
+                <span>👋 Привет, {{ user.username }}</span>
+                <a href="{% url 'toggle_theme' %}" class="text-blue-600 hover:underline">🎨 Сменить тему</a>
+                <a href="{% url 'logout' %}" class="text-red-600 hover:underline">Выход</a>
+            </div>
+
+            <!-- Бургер -->
+            <div class="md:hidden">
+                <button id="burger" class="text-gray-700 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Мобильное меню -->
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
+        <div class="space-y-2">
+            <p>👋 {{ user.username }}</p>
+            <a href="{% url 'toggle_theme' %}" class="block text-blue-600 hover:underline">🎨 Сменить тему</a>
+            <a href="{% url 'logout' %}" class="block text-red-600 hover:underline">Выход</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Контент -->
 <div class="container py-4">
-    <p class="text-end">
-        👋 Привет, {{ user.username }} |
-        <a href="{% url 'toggle_theme' %}">🎨 Сменить тему</a>
-        <a href="{% url 'logout' %}">Выход</a>
-    </p>
     {% block content %}{% endblock %}
 </div>
+
+<!-- Скрипт бургер-меню -->
+<script>
+    document.getElementById("burger").addEventListener("click", function () {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+    });
+</script>
+
 </body>
 </html>

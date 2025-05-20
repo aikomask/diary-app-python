@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'diary',
+    # 'tailwind',
+    # 'frontend',
 ]
 
 MIDDLEWARE = [
@@ -108,16 +110,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
 
-INSTALLED_APPS += [
-    # 'theme', 
-    'tailwind', 
-    # 'django_browser_reload',
-    ]
-TAILWIND_APP_NAME = 'theme'
+# INSTALLED_APPS += [
+#     'theme', 
+#     'tailwind', 
+#     'django_browser_reload',
+#     ]
+# TAILWIND_APP_NAME = 'theme'
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+# INTERNAL_IPS = [
+#     "127.0.0.1",
+# ]
 
 if os.environ.get("RENDER"):
     try:

@@ -3,24 +3,6 @@
 {% block title %}📘 My Qalam{% endblock %}
 
 {% block content %}
-<!-- Навигационное меню под шапкой -->
-<nav class="mb-6 border-b border-gray-200">
-  <ul class="flex gap-8 text-indigo-700 font-semibold">
-    <li>
-      <a href="{% url 'home' %}" class="hover:text-indigo-900">Home</a>
-    </li>
-    <li>
-      <a href="{% url 'create_entry' %}" class="hover:text-indigo-900">New Note</a>
-    </li>
-    <li>
-      <a href="{% url 'calendar_view' %}" class="hover:text-indigo-900">Calendar View</a>
-    </li>
-    <li>
-      <a href="{% url 'about_us' %}" class="hover:text-indigo-900">About Us</a>
-    </li>
-  </ul>
-</nav>
-
 <!-- Фильтры поиска -->
 <div class="mb-6 flex flex-wrap items-center gap-4 justify-between">
     <form method="get" class="flex flex-wrap gap-3 items-center flex-grow max-w-3xl">

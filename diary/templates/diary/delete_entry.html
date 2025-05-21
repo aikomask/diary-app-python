@@ -3,13 +3,21 @@
 {% block title %}Удалить: {{ entry.title }}{% endblock %}
 
 {% block content %}
-<h1 class="text-danger mb-4">🗑️ Удалить запись</h1>
+<h1 class="text-red-600 text-3xl font-semibold mb-6">🗑️ Удалить запись</h1>
 
-<p>Ты уверен, что хочешь удалить <strong>{{ entry.title }}</strong>?</p>
+<p class="text-gray-800 mb-6">
+  Ты уверен, что хочешь удалить <strong>{{ entry.title }}</strong>?
+</p>
 
-<form method="post" class="mt-3">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Удалить</button>
-    <a href="{% url 'view_entry' entry.id %}" class="btn btn-secondary ms-2">Отмена</a>
+<form method="post" class="space-x-4">
+  {% csrf_token %}
+  <button type="submit" 
+          class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-md shadow-sm transition">
+    Удалить
+  </button>
+  <a href="{% url 'view_entry' entry.id %}" 
+     class="bg-gray-300 hover:bg-gray-400 text-gray-900 font-semibold py-2 px-6 rounded-md shadow-sm transition">
+    Отмена
+  </a>
 </form>
 {% endblock %}

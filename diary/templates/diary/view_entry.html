@@ -3,34 +3,44 @@
 {% block title %}{{ entry.title }}{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">{{ entry.title }}</h1>
-<p class="text-muted">{{ entry.created_at|date:"j E Y, H:i" }}</p>
+<h1 class="mb-4 text-3xl font-semibold text-gray-900">{{ entry.title }}</h1>
+<p class="text-gray-500 mb-6">{{ entry.created_at|date:"j E Y, H:i" }}</p>
 
-<div class="mb-4">
+<div class="mb-6 prose max-w-none">
     {{ entry.content|linebreaks }}
 </div>
 
 {% if entry.categories.all %}
-    <div class="mb-3">
-        <strong>Категории:</strong>
-        <div class="d-flex flex-wrap">
+    <div class="mb-6">
+        <strong class="block mb-2 text-gray-700">Категории:</strong>
+        <div class="flex flex-wrap gap-2">
             {% for cat in entry.categories.all %}
-                <span class="badge bg-info text-dark me-2">{{ cat.name }}</span>
+                <span class="inline-block bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {{ cat.name }}
+                </span>
             {% endfor %}
         </div>
     </div>
 {% endif %}
 
 {% if entry.image %}
-    <div class="mb-4">
-        <img src="{{ entry.image.url }}" class="img-fluid rounded shadow-sm" alt="Изображение">
+    <div class="mb-6">
+        <img src="{{ entry.image.url }}" alt="Изображение" class="rounded shadow-md max-w-full h-auto">
     </div>
 {% endif %}
 
-<div class="d-flex gap-2">
-    <a href="{% url 'edit_entry' entry.id %}" class="btn btn-warning">✏️ Редактировать</a>
-    <a href="{% url 'delete_entry' entry.id %}" class="btn btn-danger ms-2">🗑️ Удалить</a>
-    <a href="{% url 'export_entry_pdf' entry.id %}" class="btn btn-outline-dark ms-2">📄 Экспорт в PDF</a>
-    <a href="{% url 'home' %}" class="btn btn-secondary ms-2">⬅️ Назад</a>
+<div class="flex flex-wrap gap-3">
+    <a href="{% url 'edit_entry' entry.id %}" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold py-2 px-4 rounded shadow-sm transition">
+        ✏️ Редактировать
+    </a>
+    <a href="{% url 'delete_entry' entry.id %}" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded shadow-sm transition">
+        🗑️ Удалить
+    </a>
+    <a href="{% url 'export_entry_pdf' entry.id %}" class="border border-gray-700 text-gray-700 hover:bg-gray-100 font-semibold py-2 px-4 rounded shadow-sm transition">
+        📄 Экспорт в PDF
+    </a>
+    <a href="{% url 'home' %}" class="bg-gray-300 hover:bg-gray-400 text-gray-900 font-semibold py-2 px-4 rounded shadow-sm transition">
+        ⬅️ Назад
+    </a>
 </div>
 {% endblock %}
